@@ -220,12 +220,11 @@ namespace apex_svd{
         template<typename DataType>
         inline void update( int r, unsigned long elapsed, time_t start, IDataIterator<DataType> *itr ){
             size_t total_num = itr->get_data_size() * train_repeat;
-
             // exceptional case when iterator didn't provide data count
             if( total_num == 0 ) total_num = 1; 
 
             size_t print_step = static_cast<size_t>( floorf(total_num * print_ratio ));
-            if( print_step <= 0 ) print_step = 1;
+            if( print_step <= 0 ) print_step = 10000;
             size_t sample_counter = 0;
             DataType dt;
             for( int j = 0; j < train_repeat; j ++ ){ 
@@ -234,9 +233,8 @@ namespace apex_svd{
                     if( sample_counter  % print_step == 0 ){
                         if( !silent ){
                             elapsed = (unsigned long)(time(NULL) - start); 
-                            printf("\r                                                                     \r");
-                            printf("round %8d:[%05.1lf%%] %lu sec elapsed", 
-                               r , (double)sample_counter / total_num * 100.0, elapsed );
+                            printf("%cround %8d:[%lu] %lu sec elapsed", 
+                               13, r, sample_counter, elapsed );
                             fflush( stdout );
                         }
                     }
@@ -256,6 +254,25 @@ namespace apex_svd{
         }
         virtual void print_task_help( FILE *fo ) const {
             printf("Usage:<config> [xxx=xx]\n");
+            printf("Configuration: \n\
+      task \n\
+        0 : train
+        1 : ??
+      seed    \n\
+      continue    \n\
+        0 : train from 0 model.
+        1 : train from final model in model_dir
+      start_counter   \n\
+      model_in    \n\
+      model_out_folder    \n\
+        model will output to this directory.
+      max_round : maximum training round.   \n\
+      num_round   \n\
+      train_repeat    \n\
+      silent  \n\
+      job \n\
+      print_ratio \n\
+      input_type  \n");
         }
         virtual void run_task( void ){
             this->init();
