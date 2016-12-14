@@ -256,16 +256,16 @@ namespace apex_svd{
             printf("Usage:<config> [xxx=xx]\n");
             printf("Configuration: \n\
       task \n\
-        0 : train
-        1 : ??
+        0 : train \n\
+        1 : ?? \n\
       seed    \n\
       continue    \n\
-        0 : train from 0 model.
-        1 : train from final model in model_dir
+        0 : train from 0 model. \n\
+        1 : train from final model in model_dir \n\
       start_counter   \n\
       model_in    \n\
       model_out_folder    \n\
-        model will output to this directory.
+        model will output to this directory. \n\
       max_round : maximum training round.   \n\
       num_round   \n\
       train_repeat    \n\
